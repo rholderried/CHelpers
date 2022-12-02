@@ -1,0 +1,31 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Unit Test Build",
+            "command": "C:\\MinGW64\\bin\\gcc.exe",
+            "args": [
+                "-g",
+                "${workspaceFolder}\\Timer32Bit\\Src\\*.c",
+                "-o",
+                "${workspaceFolder}\\Test\\UnitTest.exe",
+                "-I",
+                "${workspaceFolder}\\Timer32Bit\\Inc",
+                "-D",
+                "UNITTEST"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "compiler: \"C:\\MinGW64\\bin\\gcc.exe\""
+        }
+    ]
+}
