@@ -1,0 +1,28 @@
+{
+    "name": "CHelpers",
+    "version": "0.5.0",
+    "description": "Generic C Helper functions",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/rholderried/CHelpers.git"
+    },
+    "authors":
+    [
+      {
+        "name": "Roman Holderried",
+        "email": "roman_holderried@hotmail.com"
+      }
+    ],
+    "frameworks": "*",
+    "platforms": "*",
+    "build": {
+        "unflags": "-std=gnu++11",
+        "flags": ["-std=c99",
+                  "-ITimer32Bit/Inc"
+        ],
+        "scrFilter": [
+          "+<Timer32Bit/Src/Timer32Bit.c>"
+        ]
+    }
+  }
