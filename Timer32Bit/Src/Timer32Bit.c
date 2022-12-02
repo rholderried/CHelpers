@@ -94,7 +94,7 @@ void Timer32BitExecute (void)
         {
             // Destroy the timer if it was declared as one shot timer
             if (pTimer->bOneShot)
-                timer32BitDestruct(ui8CurrentIndex);
+                Timer32BitDestruct(ui8CurrentIndex);
 
             // Call the action procedure
             if (pTimer->pfnTimer_cb != NULL)
@@ -154,7 +154,7 @@ void Timer32BitDestruct (uint8_t ui8Index)
     sTimerCtl.ui32FreeIndices |= (1 << ui8Index);
 
     // Reset timer activation
-    timer32BitSetActive(ui8Index, false);
+    Timer32BitSetActive(ui8Index, false);
 }
 
 //==============================================================================
@@ -189,6 +189,6 @@ void Timer32BitSetValue (uint8_t ui8Index, bool bActive, uint32_t ui32TimerVal)
         pTimer->ui32TimerVal = ui32TimerVal;
 
     // Aktivieren / Deaktivieren des Timers
-    timer32BitSetActive(ui8Index, bActive);
+    Timer32BitSetActive(ui8Index, bActive);
 }
 // EOF timer.c-----------------------------------------------------------------------

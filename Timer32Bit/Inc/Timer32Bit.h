@@ -18,6 +18,10 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /************************************************************************************
  * Defines
  ***********************************************************************************/
@@ -40,7 +44,7 @@ typedef struct {
     bool        bUpCounter;         // true: Upcounter, false: Downcounter
     uint8_t     ui8Index;           // Timer index value
     uint32_t    ui32ResetValue;     // Reset value / Maximum counter value
-    uint32_t    ui32TimerVal;      // Current timer value
+    uint32_t    ui32TimerVal;       // Current timer value
     tTimer_cb pfnTimer_cb;          // Callback
 //    void *vUser_data;             // Pointer on userdata, passed at callback execution
 }tTIMERVAR32;
@@ -106,6 +110,10 @@ void Timer32BitSetActive (uint8_t index, bool bActive);
  * @param ui32TimerVal  Desired timer value
  ***********************************************************************************/
 void Timer32BitSetValue (uint8_t index, bool bActive, uint32_t ui32TimerVal);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //_TIMER32BIT_H_
 // EOF 
