@@ -35,7 +35,7 @@ extern "C" {
  * Type definitions
  ***********************************************************************************/
 // Callback
-typedef void (* tTimer_cb)(void);
+typedef void (* tTimer_cb)(void* pUserData);
 
 // Timervar
 typedef struct {
@@ -45,17 +45,17 @@ typedef struct {
     uint8_t     ui8Index;           // Timer index value
     uint32_t    ui32ResetValue;     // Reset value / Maximum counter value
     uint32_t    ui32TimerVal;       // Current timer value
-    tTimer_cb pfnTimer_cb;          // Callback
-//    void *vUser_data;             // Pointer on userdata, passed at callback execution
+    tTimer_cb   pfnTimer_cb;        // Callback
+    void        *pUserData;         // Pointer on userdata, passed at callback execution
 }tTIMERVAR32;
 
-#define  tTIMERVAR32_DEFAULTS {false, false, false, 0, 0, 0, NULL, /*NULL*/}
+#define  tTIMERVAR32_DEFAULTS {false, false, false, 0, 0, 0, NULL, NULL}
 
 // Timer control structure
 typedef struct {
     uint32_t        ui32FreeIndices;
     uint8_t         ui8ActiveTimers;
-    tTIMERVAR32    sTimerStruct[MAX_TIMER_NUMBER];
+    tTIMERVAR32     sTimerStruct[MAX_TIMER_NUMBER];
 }tTIMER_CTL_32BIT;
 
 #define tTIMER_32BIT_CTL_DEFAULTS { 0xFFFFFFFF, 0, {tTIMERVAR32_DEFAULTS}}
@@ -110,6 +110,15 @@ void Timer32BitSetActive (uint8_t index, bool bActive);
  * @param ui32TimerVal  Desired timer value
  ***********************************************************************************/
 void Timer32BitSetValue (uint8_t index, bool bActive, uint32_t ui32TimerVal);
+
+/********************************************************************************//**
+ * \brief Attach callback to a timer at a specific index
+ *
+ * @param ui8Index  Index of the timer
+ * @param pFn       Timer callback
+ * @param pUserData Pointer to the user data
+ ***********************************************************************************/
+void Timer32AttachCallback (uint8_t ui8Index, tTimer_cb pFn, void* pUserData);
 
 #ifdef __cplusplus
 }

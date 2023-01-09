@@ -37,7 +37,7 @@ static tTIMER_CTL_32BIT sTimerCtl = tTIMER_32BIT_CTL_DEFAULTS;
  ***********************************************************************************/
 
 //===================================================================================
-// Funktion: timer32BitExecute
+// Funktion: Timer32BitExecute
 //===================================================================================
 void Timer32BitExecute (void)
 {
@@ -92,13 +92,13 @@ void Timer32BitExecute (void)
         
         if (bTimerFinished)
         {
-            // Destroy the timer if it was declared as one shot timer
+            // Deactivate the timer if it was declared as one shot timer
             if (pTimer->bOneShot)
-                Timer32BitDestruct(ui8CurrentIndex);
+                Timer32BitSetActive(ui8CurrentIndex, false);
 
             // Call the action procedure
             if (pTimer->pfnTimer_cb != NULL)
-                pTimer->pfnTimer_cb(/*pTimer->vUser_data*/);
+                pTimer->pfnTimer_cb(pTimer->pUserData);
 
             // Prepare the var for reuse
             bTimerFinished = false;
@@ -110,7 +110,7 @@ void Timer32BitExecute (void)
 }
 
 //===================================================================================
-// Funktion: appendTimer32Bit
+// Funktion: AppendTimer32Bit
 //===================================================================================
 int8_t AppendTimer32Bit (tTIMERVAR32 *sTimerConf)
 {
@@ -146,7 +146,7 @@ int8_t AppendTimer32Bit (tTIMERVAR32 *sTimerConf)
 }
 
 //==============================================================================
-// Funktion: timer32BitDestruct
+// Funktion: Timer32BitDestruct
 //==============================================================================
 void Timer32BitDestruct (uint8_t ui8Index)
 {
@@ -158,7 +158,7 @@ void Timer32BitDestruct (uint8_t ui8Index)
 }
 
 //==============================================================================
-// Funktion: timer32BitSetActive
+// Funktion: Timer32BitSetActive
 //==============================================================================
 void Timer32BitSetActive (uint8_t ui8Index, bool bActive)
 {
@@ -173,7 +173,7 @@ void Timer32BitSetActive (uint8_t ui8Index, bool bActive)
 }
 
 //==============================================================================
-// Funktion: ms_timer_16Bit_set_val
+// Funktion: Timer32BitSetValue
 //==============================================================================
 void Timer32BitSetValue (uint8_t ui8Index, bool bActive, uint32_t ui32TimerVal)
 {
@@ -190,5 +190,17 @@ void Timer32BitSetValue (uint8_t ui8Index, bool bActive, uint32_t ui32TimerVal)
 
     // Aktivieren / Deaktivieren des Timers
     Timer32BitSetActive(ui8Index, bActive);
+}
+
+//==============================================================================
+// Funktion: Timer32AttachCallback
+//==============================================================================
+void Timer32AttachCallback (uint8_t ui8Index, tTimer_cb pFn, void* pUserData)
+{
+    if (ui8Index < MAX_TIMER_NUMBER)
+    {
+        sTimerCtl.sTimerStruct[ui8Index].pfnTimer_cb    = pFn;
+        sTimerCtl.sTimerStruct[ui8Index].pUserData      = pUserData;
+    }
 }
 // EOF timer.c-----------------------------------------------------------------------
